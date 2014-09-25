@@ -12,5 +12,8 @@ Usage
 
 or just:
 
-	<textarea maxlength="150" data-info-pane="character-count" data-message-format="{0} of {1}" cols="30" rows="10"></textarea>
+	<textarea cols="30" rows="10"
+			  maxlength="150"
+			  data-info-pane="character-count"
+			  data-message-format="{0} of {1}"></textarea>
 	<span class="character-count"></span> // 10 of 150
