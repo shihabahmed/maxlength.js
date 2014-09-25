@@ -1,8 +1,8 @@
 ; (function ($) {
 	$.fn.extend({
-		limitChars: function () {
+		maxlength: function () {
 			return this.each(function (index, el) {
-				var $Textarea, maxLength, raw_text, actual_text, lengthDiff, info, infoPane;
+				var $Textarea, max_Length, raw_text, actual_text, lengthDiff, info, infoPane;
 
 				var defaultOptions = {
 					infoPane: '.char-count',
@@ -20,23 +20,23 @@
 					infoPane = $(defaultOptions.infoPane);
 				}
 
-				maxLength = parseInt($Textarea.attr('maxlength'));
+				max_Length = parseInt($Textarea.attr('maxlength'));
 
-				defaultOptions.messageFormat = defaultOptions.messageFormat.replace('{1}', maxLength);
+				defaultOptions.messageFormat = defaultOptions.messageFormat.replace('{1}', max_Length);
 
 				infoPane.text(defaultOptions.messageFormat.replace('{0}', 0));
 
 				$Textarea.keyup(function () {
 					raw_text = $Textarea.val();
 					if (raw_text.length === 0) {
-						$Textarea.attr('maxlength', maxLength);
+						$Textarea.attr('maxlength', max_Length);
 						infoPane.text(defaultOptions.messageFormat.replace('{0}', 0));
 					} else {
 						actual_text = raw_text.replace(/ {2,}/g, ' ');
 						lengthDiff = raw_text.length - actual_text.length;
 
-						if (lengthDiff > 0 && (maxLength + lengthDiff) >= maxLength) {
-							$Textarea.attr('maxlength', (maxLength + lengthDiff));
+						if (lengthDiff > 0 && (max_Length + lengthDiff) >= max_Length) {
+							$Textarea.attr('maxlength', (max_Length + lengthDiff));
 						}
 
 						if (info) {
@@ -49,6 +49,6 @@
 	});
 
 	$(function () {
-		$('textarea[maxlength]').limitChars();
+		$('textarea[maxlength]').maxlength();
 	});
 })(jQuery);
