@@ -2,14 +2,16 @@
 	$.fn.extend({
 		maxlength: function () {
 			return this.each(function (index, el) {
-				var $Textarea, max_Length, raw_text, actual_text, lengthDiff, info, infoPane;
+				var $Textarea, max_Length, raw_text, actual_text, lengthDiff, info, infoPane,
+					used, remaining,
+					timestamp = new Date().getTime();
 
 				var defaultOptions = {
-					infoPane: '.char-count',
-					messageFormat: '{0} of {1}'
+					infoPane: null,
+					messageFormat: '{used} of {total}'
 				};
 
-				$Textarea = $(this).addClass('char-limited-' + index);
+				$Textarea = $(this).addClass('maxlength-' + index);
 
 				var dataAttr = $Textarea.data();
 
@@ -18,19 +20,28 @@
 				if (defaultOptions.infoPane) {
 					info = true;
 					infoPane = $(defaultOptions.infoPane);
+					//infoPane = $(defaultOptions.infoPane).addClass('maxlength-info-' + index);
+					//$Textarea.attr('data-infoPane', ('maxlength-info-' + index));
 				}
 
 				max_Length = parseInt($Textarea.attr('maxlength'));
 
-				defaultOptions.messageFormat = defaultOptions.messageFormat.replace('{1}', max_Length);
+				defaultOptions.messageFormat = defaultOptions.messageFormat.replace('{total}', max_Length);
 
-				infoPane.text(defaultOptions.messageFormat.replace('{0}', 0));
+				if (info) {
+					infoPane.text(defaultOptions.messageFormat.replace('{used}', 0).replace('{remaining}', max_Length));
+				}
 
 				$Textarea.keyup(function () {
 					raw_text = $Textarea.val();
 					if (raw_text.length === 0) {
 						$Textarea.attr('maxlength', max_Length);
-						infoPane.text(defaultOptions.messageFormat.replace('{0}', 0));
+						used = 0;
+						remaining = max_Length - used;
+
+						if (info) {
+							infoPane.text(defaultOptions.messageFormat.replace('{used}', used).replace('{remaining}', remaining));
+						}
 					} else {
 						actual_text = raw_text.replace(/ {2,}/g, ' ');
 						lengthDiff = raw_text.length - actual_text.length;
@@ -39,8 +50,11 @@
 							$Textarea.attr('maxlength', (max_Length + lengthDiff));
 						}
 
+						used = actual_text.length;
+						remaining = max_Length - used;
+
 						if (info) {
-							infoPane.text(defaultOptions.messageFormat.replace('{0}', actual_text.length));
+							infoPane.text(defaultOptions.messageFormat.replace('{used}', used).replace('{remaining}', remaining));
 						}
 					}
 				});
