@@ -10,13 +10,14 @@ Limits the number of characters a <code>textarea</code> should allow. The defaul
 
 	<textarea maxlength="100" cols="30" rows="10"></textarea>
 
-or just:
+or in detail:
 
 	<textarea cols="30" rows="10"
 			  maxlength="150"
 			  data-info-pane="character-count"
-			  data-message-format="{0} of {1}"></textarea>
-	<span class="character-count"></span> // 10 of 150
+			  data-message-format="Used {used} of {total}; Remaining {remaining}"></textarea>
+
+	<span class="character-count"></span> // Used 10 of 150; Remaining 140
 
 ####Example
-http://jsbin.com/lutuxaki/4/
+http://jsbin.com/lutuxaki/5
