@@ -20,8 +20,6 @@
 				if (defaultOptions.infoPane) {
 					info = true;
 					infoPane = $(defaultOptions.infoPane);
-					//infoPane = $(defaultOptions.infoPane).addClass('maxlength-info-' + index);
-					//$Textarea.attr('data-infoPane', ('maxlength-info-' + index));
 				}
 
 				max_Length = parseInt($Textarea.attr('maxlength'));
