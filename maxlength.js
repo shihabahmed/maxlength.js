@@ -61,6 +61,6 @@
 	});
 
 	$(function () {
-		$('textarea[maxlength]').maxlength();
+		$('textarea[maxlength]').maxlength().keyup();
 	});
 })(jQuery);
